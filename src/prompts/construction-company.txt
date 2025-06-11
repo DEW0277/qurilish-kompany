@@ -1,0 +1,111 @@
+# Qurilish Kompaniyasi Veb-sayti uchun AI Prompt
+
+## Asosiy Ma'lumotlar
+- Kompaniya nomi: [Kompaniya nomi]
+- Slogan: "Sifatli qurilish - kelajakning poydevori"
+- Ish faoliyati: 10+ yil
+- Manzil: [Manzil]
+- Telefon: [Telefon raqami]
+- Email: [Email manzili]
+
+## Veb-sayt Strukturasi
+
+### 1. Bosh Sahifa
+- Kompaniya haqida qisqa ma'lumot
+- Asosiy xizmatlar
+- So'nggi loyihalar
+- Mijozlar fikrlari
+- Bog'lanish formasi
+
+### 2. Biz Haqimizda
+- Kompaniya tarixi
+- Missiya va vazifalar
+- Jamoa a'zolari
+- Sertifikatlar va litsenziyalar
+- Kompaniya qiymatlari
+
+### 3. Xizmatlar
+- Turar-joy qurilishi
+- Sanoat binolari
+- Infratuzilma loyihalari
+- Ta'mirlash va rekonstruksiya
+- Arxitektura va dizayn
+- Muhandislik maslahati
+
+### 4. Loyihalar
+- Yakunlangan loyihalar
+- Joriy loyihalar
+- Kelajakdagi loyihalar
+- Loyiha portfoliolari
+- Loyiha haqida batafsil ma'lumot
+
+### 5. Yangiliklar
+- Kompaniya yangiliklari
+- Sanoat yangiliklari
+- Tadbirlar
+- Blog maqolalari
+
+### 6. Bog'lanish
+- Kontakt ma'lumotlari
+- Joylashuv xaritasi
+- So'rov formasi
+- Ish vaqti
+
+## Dizayn Elementlari
+- Ranglar: Ko'k, oq, kulrang
+- Font: Roboto
+- Rasmlar: Professional qurilish rasmlari
+- Ikonkalar: Material Design
+
+## SEO Optimizatsiyasi
+- Kalit so'zlar: qurilish, binokorlik, arxitektura, loyiha, O'zbekiston
+- Meta teglar
+- Alt teglar
+- URL struktura
+
+## Funksionallik
+- Responsive dizayn
+- Tezkor yuklanish
+- Xarita integratsiyasi
+- Onlayn so'rov formasi
+- Rasmlar galereyasi
+- Til tanlash (O'zbek/Rus/Ingliz)
+
+## Xavfsizlik
+- SSL sertifikati
+- Xavfsiz hosting
+- Ma'lumotlarni himoya qilish
+- Zaxira nusxalash
+
+## Analitika
+- Google Analytics
+- Yandex.Metrica
+- Heat map
+- A/B testlar
+
+## Marketing
+- Call-to-action tugmalar
+- Newsletter obuna
+- Ijtimoiy tarmoqlar integratsiyasi
+- Online chat
+
+## Texnik Talablar
+- Tezkor yuklanish (<3 sekund)
+- Mobile-first yondashuv
+- Cross-browser moslik
+- W3C standartlariga rioya
+- Accessibility standartlari
+
+## Qo'shimcha Funksionallik
+- Loyiha kalkulyatori
+- Onlayn maslahat
+- Video galereya
+- 3D vizualizatsiya
+- Virtual sayohat
+
+## Monitoring va Kengaytirish
+- Regular yangilanishlar
+- Xavfsizlik tekshiruvlari
+- Performance optimizatsiyasi
+- Content yangilanishlari
+- Backup tizimi 
