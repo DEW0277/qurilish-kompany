@@ -188,7 +188,7 @@ const ApartmentCard = ({ apartment }: { apartment: Apartment }) => {
             {apartment.price}
           </span>
           <button className='bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 hover:text-white transition-colors'>
-            {t('apartments.cta.button')}
+            {t('apartments.cta.button') as string}
           </button>
         </div>
       </div>
@@ -248,16 +248,7 @@ const ApartmentCard = ({ apartment }: { apartment: Apartment }) => {
 
 const Apartments = () => {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState('apartments');
-  const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
-  const [selectedFloors, setSelectedFloors] = useState<string[]>([]);
-  const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
-  const [selectedYears, setSelectedYears] = useState<string[]>([]);
-
-  const rooms = ['1', '2', '3', '4+'];
-  const floors = ['-1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10+'];
-  const areas = ['10-30', '30-50', '50-70', '70-90', '90+'];
-  const years = ['2024', '2025', '2026', '2027'];
+  const apartments = t('apartments.items') as unknown as Apartment[];
 
   return (
     <section
@@ -265,181 +256,43 @@ const Apartments = () => {
       className='py-20 bg-gray-50 relative overflow-hidden'
     >
       <BackgroundShapes />
-
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-        <div className='text-center mb-16'>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className='text-center mb-16'
+        >
           <h2 className='text-4xl font-bold text-gray-900 mb-4'>
-            O'zingizga ideal kvartirani tanlang
+            {t('apartments.title') as string}
           </h2>
-        </div>
+          <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+            {t('apartments.subtitle') as string}
+          </p>
+        </motion.div>
 
-        {/* Filter Tabs */}
-        <div className='flex justify-center mb-8'>
-          <div className='inline-flex rounded-lg border border-gray-200 p-1 bg-white'>
-            <button
-              onClick={() => setActiveTab('apartments')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                activeTab === 'apartments'
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              Xonadonlar
-            </button>
-            <button
-              onClick={() => setActiveTab('commercial')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
-                activeTab === 'commercial'
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              Tijorat binolari
-            </button>
-          </div>
-        </div>
-
-        {/* Filter Section */}
-        <div className='bg-white rounded-lg shadow-lg p-6 mb-8'>
-          <div className='grid md:grid-cols-4 gap-6'>
-            {/* Rooms Filter */}
-            <div>
-              <h3 className='font-medium text-gray-900 mb-3'>Xonalar</h3>
-              <div className='flex flex-wrap gap-2'>
-                {rooms.map((room) => (
-                  <button
-                    key={room}
-                    onClick={() => {
-                      setSelectedRooms(
-                        selectedRooms.includes(room)
-                          ? selectedRooms.filter((r) => r !== room)
-                          : [...selectedRooms, room]
-                      );
-                    }}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedRooms.includes(room)
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {room}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Floors Filter */}
-            <div>
-              <h3 className='font-medium text-gray-900 mb-3'>Qavat</h3>
-              <div className='flex flex-wrap gap-2'>
-                {floors.map((floor) => (
-                  <button
-                    key={floor}
-                    onClick={() => {
-                      setSelectedFloors(
-                        selectedFloors.includes(floor)
-                          ? selectedFloors.filter((f) => f !== floor)
-                          : [...selectedFloors, floor]
-                      );
-                    }}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedFloors.includes(floor)
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {floor}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Area Filter */}
-            <div>
-              <h3 className='font-medium text-gray-900 mb-3'>Maydon, m²</h3>
-              <div className='flex flex-wrap gap-2'>
-                {areas.map((area) => (
-                  <button
-                    key={area}
-                    onClick={() => {
-                      setSelectedAreas(
-                        selectedAreas.includes(area)
-                          ? selectedAreas.filter((a) => a !== area)
-                          : [...selectedAreas, area]
-                      );
-                    }}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedAreas.includes(area)
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {area}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Year Filter */}
-            <div>
-              <h3 className='font-medium text-gray-900 mb-3'>
-                Topshirish muddati
-              </h3>
-              <div className='flex flex-wrap gap-2'>
-                {years.map((year) => (
-                  <button
-                    key={year}
-                    onClick={() => {
-                      setSelectedYears(
-                        selectedYears.includes(year)
-                          ? selectedYears.filter((y) => y !== year)
-                          : [...selectedYears, year]
-                      );
-                    }}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedYears.includes(year)
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {year}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className='mt-6 flex justify-between items-center'>
-            <button
-              onClick={() => {
-                setSelectedRooms([]);
-                setSelectedFloors([]);
-                setSelectedAreas([]);
-                setSelectedYears([]);
-              }}
-              className='text-gray-600 hover:text-gray-900 font-medium flex items-center gap-2'
-            >
-              <X className='h-4 w-4' />
-              Filtrni tozalash
-            </button>
-            <div className='text-gray-600'>
-              Topilgan variantlar: {t('apartments.items').length}
-            </div>
-          </div>
-        </div>
-
-        {/* Apartments Grid */}
         <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {t('apartments.items').map((apartment: Apartment, index: number) => (
+          {apartments.map((apartment, index) => (
             <ApartmentCard key={index} apartment={apartment} />
           ))}
         </div>
 
-        <div className='mt-16 text-center'>
-          <button className='bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 hover:text-white transition-colors'>
-            Yana variantlarni ko'rsatish
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className='text-center mt-16'
+        >
+          <h3 className='text-2xl font-bold text-gray-900 mb-4'>
+            {t('apartments.cta.title') as string}
+          </h3>
+          <p className='text-gray-600 mb-8 max-w-2xl mx-auto'>
+            {t('apartments.cta.description') as string}
+          </p>
+          <button className='bg-blue-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-blue-700 transition-colors'>
+            {t('apartments.cta.button') as string}
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

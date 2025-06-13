@@ -79,9 +79,9 @@ export const translations = {
       },
     },
     services: {
-      title: 'Bizning Xizmatlarimiz',
+      title: 'Bizning Maxsus Xizmatlarimiz',
       description:
-        "Ko'p qavatli turar-joy qurilishida 15 yillik tajribaga ega bo'lgan Yuksalish Developments, zamonaviy dizayn, yuqori xavfsizlik va barqaror qurilish amaliyotlarini taqdim etadi. Bizning mutaxassislarimiz har bir loyihani e'tibor bilan boshqarib, sifatli va vaqtida yetkazib berishni ta'minlaydi.",
+        "Yuksalish Group - ko'p qavatli turar-joy qurilishida 15 yillik tajribaga ega bo'lgan yetakchi kompaniya. Biz zamonaviy dizayn, yuqori xavfsizlik va barqaror qurilish amaliyotlarini taqdim etamiz. Bizning mutaxassislarimiz har bir loyihani e'tibor bilan boshqarib, sifatli va vaqtida yetkazib berishni ta'minlaydi.",
       items: [
         {
           title: 'Yuqori Tuzilma Xavfsizligi',
@@ -144,6 +144,122 @@ export const translations = {
         description:
           "Bizning mutaxassislarimiz bilan bog'laning va ko'p qavatli turar-joy loyihangizni reallikka aylantirishda yordam oling.",
         button: "Bog'lanish",
+      },
+      stats: {
+        title: "Bizning Ko'rsatkichlarimiz",
+        items: [
+          {
+            number: '15+',
+            label: 'Yillik Tajriba',
+            description:
+              'Professional qurilish sohasida 15 yildan ortiq tajriba',
+          },
+          {
+            number: '150+',
+            label: 'Yakunlangan Loyihalar',
+            description: "Muvaffaqiyatli yakunlangan ko'p qavatli binolar",
+          },
+          {
+            number: '1000+',
+            label: 'Mamnun Mijozlar',
+            description: 'Bizning xizmatlarimizdan foydalangan mijozlar soni',
+          },
+          {
+            number: '98%',
+            label: 'Vaqtida Yetkazib Berish',
+            description: 'Loyihalarni belgilangan muddatda yakunlash darajasi',
+          },
+        ],
+        achievements: [
+          {
+            title: 'Eng Yaxshi Qurilish Kompaniyasi',
+            year: '2023',
+            description: "O'zbekiston qurilish sohasidagi eng yaxshi kompaniya",
+          },
+          {
+            title: 'Sifat Sertifikati',
+            year: '2022',
+            description: 'Xalqaro standartlarga moslik sertifikati',
+          },
+          {
+            title: 'Innovatsion Yechimlar',
+            year: '2021',
+            description: 'Zamonaviy qurilish texnologiyalari joriy etish',
+          },
+        ],
+      },
+      services: {
+        title: 'Bizning Xizmatlarimiz',
+        description:
+          'Yuksalish Group kompaniyasi quyidagi xizmatlarni taqdim etadi:',
+        items: [
+          {
+            title: "Ko'p Qavatli Turar-joy Qurilishi",
+            description: 'Zamonaviy va qulay turar-joy binolarini qurish',
+            features: [
+              'Zilzilaga chidamli dizayn',
+              'Yuqori sifatli materiallar',
+              'Zamonaviy infratuzilma',
+              'Xavfsizlik tizimlari',
+            ],
+          },
+          {
+            title: 'Savdo Binolari',
+            description: 'Savdo markazlari va ofis binolarini qurish',
+            features: [
+              'Zamonaviy arxitektura',
+              'Energiya samaradorligi',
+              'Aqlli bino tizimlari',
+              'Qulay joylashuv',
+            ],
+          },
+          {
+            title: 'Sanoat Binolari',
+            description: 'Sanoat majmualari va omborlarni qurish',
+            features: [
+              "Yuqori yuk ko'tarish quvvati",
+              'Ishlab chiqarish uchun optimallashtirilgan',
+              'Xavfsizlik standartlari',
+              'Logistika uchun qulay',
+            ],
+          },
+          {
+            title: "Ta'mirlash va Rekonstruksiya",
+            description: "Mavjud binolarni ta'mirlash va modernizatsiya qilish",
+            features: [
+              'Zamonaviy dizayn',
+              'Energiya samaradorligi',
+              'Xavfsizlikni oshirish',
+              "Qiymatni ko'tarish",
+            ],
+          },
+          {
+            title: 'Loyiha Boshqaruvi',
+            description: 'Qurilish loyihalarini professional boshqarish',
+            features: [
+              'Vaqtida yakunlash',
+              'Byudjet nazorati',
+              'Sifat kafolati',
+              'Professional jamoa',
+            ],
+          },
+          {
+            title: 'Muhandislik Maslahati',
+            description: 'Qurilish loyihalari uchun professional maslahat',
+            features: [
+              'Texnik tahlil',
+              'Xarajatlarni optimallashtirish',
+              'Risklarni kamaytirish',
+              'Professional maslahat',
+            ],
+          },
+        ],
+        cta: {
+          title: "Xizmatlarimiz Haqida Ko'proq Ma'lumot",
+          description:
+            "Bizning mutaxassislarimiz bilan bog'laning va o'zingizga mos xizmatni tanlang",
+          button: 'Maslahat Olish',
+        },
       },
     },
     contact: {
@@ -282,6 +398,7 @@ export const translations = {
           name: 'Aziza Karimova',
           role: 'Turar-joy Egasi',
           image: '/testimonials/client1.jpg',
+          video: '/videos/testimonial1.mp4',
           quote:
             "Yuksalish Developments bilan ishlash juda qulay edi. Ular har bir bosqichda meni xabardor qilishdi va yakuniy natija ajoyib bo'ldi. Mening yangi uyim zamonaviy, xavfsiz va juda qulay.",
         },
@@ -289,6 +406,7 @@ export const translations = {
           name: 'Jamshid Aliyev',
           role: 'Investor',
           image: '/testimonials/client2.jpg',
+          video: '/videos/testimonial2.mp4',
           quote:
             "Men Yuksalish Developments bilan bir nechta loyihalarda ishladim va har safar ularning professional yondashuvi va sifatli ishlaridan mamnun bo'ldim. Ular har doim vaqtida yetkazib berishadi va narxlar ham oqilona.",
         },
@@ -296,6 +414,7 @@ export const translations = {
           name: 'Dilshod Rahimov',
           role: 'Biznes Egasi',
           image: '/testimonials/client3.jpg',
+          video: '/videos/testimonial3.mp4',
           quote:
             "Bizning ofis binomizni qurishda Yuksalish Developments yordami beqiyos edi. Ular bizning barcha talablarimizni e'tiborga olishdi va natija ajoyib bo'ldi. Endi bizning ofisimiz shaharning eng zamonaviy binolaridan biri hisoblanadi.",
         },
