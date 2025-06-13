@@ -14,47 +14,68 @@ import {
   Target,
   CheckCircle
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
 
   const benefits = [
     {
       icon: Shield,
-      title: 'Superior Structural Safety',
-      description: 'Advanced engineering and seismic-resistant design for maximum safety and durability.',
-      features: ['Earthquake-resistant design', 'Premium materials', 'Rigorous safety inspections', 'Building code compliance']
+      title: t('services.items.0.title'),
+      description: t('services.items.0.description'),
+      features: [
+        t('services.items.0.features.0'),
+        t('services.items.0.features.1'),
+        t('services.items.0.features.2'),
+        t('services.items.0.features.3')
+      ]
     },
     {
       icon: Clock,
-      title: 'On-Time Delivery',
-      description: 'Proven project management ensures completion within agreed timelines.',
-      features: ['Detailed project scheduling', 'Regular progress updates', 'Contingency planning', '98% on-time completion rate']
+      title: t('services.items.1.title'),
+      description: t('services.items.1.description'),
+      features: [
+        t('services.items.1.features.0'),
+        t('services.items.1.features.1'),
+        t('services.items.1.features.2'),
+        t('services.items.1.features.3')
+      ]
     },
     {
       icon: DollarSign,
-      title: 'Cost Transparency',
-      description: 'Clear, upfront pricing with no hidden costs or surprise charges.',
-      features: ['Detailed cost breakdowns', 'Fixed-price contracts', 'Change order transparency', 'Value engineering']
+      title: t('services.items.2.title'),
+      description: t('services.items.2.description'),
+      features: [
+        t('services.items.2.features.0'),
+        t('services.items.2.features.1'),
+        t('services.items.2.features.2'),
+        t('services.items.2.features.3')
+      ]
     },
     {
       icon: Leaf,
-      title: 'Energy Efficiency',
-      description: 'Sustainable building practices and energy-efficient systems reduce operating costs.',
-      features: ['LEED certification options', 'Smart building systems', 'Energy-efficient HVAC', 'Sustainable materials']
+      title: t('services.items.3.title'),
+      description: t('services.items.3.description'),
+      features: [
+        t('services.items.3.features.0'),
+        t('services.items.3.features.1'),
+        t('services.items.3.features.2'),
+        t('services.items.3.features.3')
+      ]
     },
     {
       icon: Building2,
-      title: 'Modern Design',
-      description: 'Contemporary architecture that enhances property value and resident satisfaction.',
-      features: ['Architectural excellence', 'Functional layouts', 'Premium finishes', 'Future-ready infrastructure']
-    },
-    {
-      icon: Users,
-      title: 'Expert Team',
-      description: 'Specialized professionals with extensive multi-storey construction experience.',
-      features: ['Licensed engineers', 'Certified project managers', 'Skilled craftsmen', 'Safety specialists']
+      title: t('services.items.4.title'),
+      description: t('services.items.4.description'),
+      features: [
+        t('services.items.4.features.0'),
+        t('services.items.4.features.1'),
+        t('services.items.4.features.2'),
+        t('services.items.4.features.3')
+      ]
     }
   ];
 
@@ -94,11 +115,10 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Why Choose SkyRise Developments?
+            {t('services.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We deliver exceptional value through our specialized expertise in multi-storey residential construction, 
-            ensuring every project meets the highest standards of quality, safety, and innovation.
+            {t('services.description')}
           </p>
         </motion.div>
 
@@ -217,11 +237,10 @@ const Services = () => {
         >
           <Zap className="h-16 w-16 text-blue-200 mx-auto mb-6" />
           <h3 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Build Your Multi-Storey Project?
+            {t('services.cta.title')}
           </h3>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Partner with the specialists in multi-storey residential construction. 
-            Get a comprehensive consultation and detailed project proposal.
+            {t('services.cta.description')}
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -232,7 +251,7 @@ const Services = () => {
             }}
             className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
           >
-            Get Free Consultation
+            {t('services.cta.button')}
           </motion.button>
         </motion.div>
       </div>

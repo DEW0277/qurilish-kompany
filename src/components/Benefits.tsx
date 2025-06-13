@@ -1,124 +1,101 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { 
-  Clock, 
-  DollarSign, 
-  Shield, 
-  Users, 
-  Wrench, 
+import {
+  Building2,
+  Shield,
   Award,
-  HeadphonesIcon,
-  Leaf
+  Clock,
+  Users,
+  Leaf,
+  Zap,
+  Heart,
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Benefits = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
 
   const benefits = [
     {
-      icon: Clock,
-      title: 'Fast & Efficient Service',
-      description: 'We complete projects on time with our streamlined construction process and experienced team.',
-      features: ['30% faster than industry average', 'Dedicated project managers', 'Real-time progress updates']
-    },
-    {
-      icon: DollarSign,
-      title: 'Cost-Effective Solutions',
-      description: 'Competitive pricing without compromising quality through smart planning and resource optimization.',
-      features: ['Transparent pricing', 'No hidden costs', 'Value engineering']
+      icon: Building2,
+      title: t('benefits.quality.title'),
+      description: t('benefits.quality.description'),
     },
     {
       icon: Shield,
-      title: 'Quality Assurance',
-      description: 'Rigorous quality control at every stage ensures lasting results and customer satisfaction.',
-      features: ['ISO certified processes', '10-year warranty', 'Regular inspections']
-    },
-    {
-      icon: Users,
-      title: 'Expert Team',
-      description: 'Licensed professionals with decades of combined experience in all construction disciplines.',
-      features: ['Certified contractors', 'Continuous training', 'Safety first approach']
-    },
-    {
-      icon: Wrench,
-      title: 'Full-Service Construction',
-      description: 'From design to completion, we handle every aspect of your construction project.',
-      features: ['Design consultation', 'Permit handling', 'Post-construction support']
+      title: t('benefits.safety.title'),
+      description: t('benefits.safety.description'),
     },
     {
       icon: Award,
-      title: 'Award-Winning Results',
-      description: 'Recognition from industry leaders for excellence in construction and customer service.',
-      features: ['Multiple industry awards', '5-star customer ratings', 'Featured in trade publications']
+      title: t('benefits.expertise.title'),
+      description: t('benefits.expertise.description'),
     },
     {
-      icon: HeadphonesIcon,
-      title: '24/7 Support',
-      description: 'Round-the-clock customer support to address any concerns during and after construction.',
-      features: ['Emergency response', 'Dedicated hotline', 'Online project portal']
+      icon: Clock,
+      title: t('benefits.timeline.title'),
+      description: t('benefits.timeline.description'),
+    },
+    {
+      icon: Users,
+      title: t('benefits.team.title'),
+      description: t('benefits.team.description'),
     },
     {
       icon: Leaf,
-      title: 'Sustainable Building',
-      description: 'Eco-friendly construction practices and materials for environmentally responsible projects.',
-      features: ['LEED certified options', 'Energy-efficient designs', 'Sustainable materials']
-    }
+      title: t('benefits.sustainability.title'),
+      description: t('benefits.sustainability.description'),
+    },
+    {
+      icon: Zap,
+      title: t('benefits.innovation.title'),
+      description: t('benefits.innovation.description'),
+    },
+    {
+      icon: Heart,
+      title: t('benefits.satisfaction.title'),
+      description: t('benefits.satisfaction.description'),
+    },
   ];
 
   return (
-    <section id="benefits" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id='benefits' className='py-20 bg-gray-50'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          ref={ref}
+          className='text-center mb-16'
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Why Choose BuildCraft Pro?
+          <h2 className='text-4xl font-bold text-gray-900 mb-4'>
+            {t('benefits.title')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We deliver exceptional value through our comprehensive construction services, 
-            experienced team, and unwavering commitment to quality and customer satisfaction.
+          <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+            {t('benefits.subtitle')}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 group"
+              transition={{ duration: 0.6, delay: 0.1 * index }}
+              className='bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow'
             >
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-orange-600 transition-colors duration-300"
-              >
-                <benefit.icon className="h-6 w-6 text-orange-600 group-hover:text-white transition-colors duration-300" />
-              </motion.div>
-              
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors">
+              <div className='w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4'>
+                <benefit.icon className='h-6 w-6 text-blue-600' />
+              </div>
+              <h3 className='text-xl font-bold text-gray-900 mb-2'>
                 {benefit.title}
               </h3>
-              
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                {benefit.description}
-              </p>
-
-              <ul className="space-y-2">
-                {benefit.features.map((feature, idx) => (
-                  <li key={idx} className="text-sm text-gray-500 flex items-center">
-                    <div className="w-1.5 h-1.5 bg-orange-600 rounded-full mr-2"></div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              <p className='text-gray-600'>{benefit.description}</p>
             </motion.div>
           ))}
         </div>
@@ -126,27 +103,23 @@ const Benefits = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="mt-16 bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-8 md:p-12 text-center text-white"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className='mt-16 text-center'
         >
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Start Your Project?
+          <h3 className='text-2xl font-bold text-gray-900 mb-4'>
+            {t('benefits.cta.title')}
           </h3>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Join hundreds of satisfied clients who trusted us with their construction needs. 
-            Get a free consultation and quote today.
+          <p className='text-xl text-gray-600 max-w-3xl mx-auto mb-8'>
+            {t('benefits.cta.description')}
           </p>
-          <motion.button
+          <motion.a
+            href='#contact'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('contact');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+            className='inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-blue-700 transition-colors'
           >
-            Get Free Consultation
-          </motion.button>
+            {t('benefits.cta.button')}
+          </motion.a>
         </motion.div>
       </div>
     </section>
