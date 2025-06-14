@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useCallback, memo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import {
@@ -11,6 +11,8 @@ import {
   Eye,
 } from 'lucide-react';
 import BackgroundShapes from './BackgroundShapes';
+import LazyImage from './LazyImage';
+import FilterSection from './FilterSection';
 
 interface Project {
   id: number;
@@ -25,13 +27,123 @@ interface Project {
   description: string;
   features: string[];
   details: string;
+  rooms: number;
+  area: number;
+  completionYear: string;
 }
+
+const ProjectCard = memo(
+  ({
+    project,
+    onSelect,
+  }: {
+    project: Project;
+    onSelect: (project: Project) => void;
+  }) => {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        className='bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300'
+      >
+        <div className='relative overflow-hidden aspect-video'>
+          <LazyImage
+            src={project.image}
+            alt={project.title}
+            className='w-full h-full'
+          />
+          <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+
+          <div className='absolute top-4 left-4'>
+            <span
+              className={`px-3 py-1 rounded-full text-sm font-medium text-white ${
+                project.category === 'high-rise'
+                  ? 'bg-blue-600'
+                  : 'bg-green-600'
+              }`}
+            >
+              {project.floors} Floors
+            </span>
+          </div>
+
+          <div className='absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+            <button
+              onClick={() => onSelect(project)}
+              className='bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-colors'
+            >
+              <Eye className='h-5 w-5 text-gray-900' />
+            </button>
+          </div>
+
+          <div className='absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+            <div className='text-white'>
+              <div className='text-sm font-medium'>{project.units} Units</div>
+              <div className='text-xs opacity-90'>
+                {project.timeline} Construction
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='p-6'>
+          <h3 className='text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors'>
+            {project.title}
+          </h3>
+          <p className='text-gray-600 mb-4 leading-relaxed'>
+            {project.description}
+          </p>
+
+          <div className='flex items-center justify-between text-sm text-gray-500 mb-4'>
+            <div className='flex items-center space-x-1'>
+              <MapPin className='h-4 w-4' />
+              <span>{project.location}</span>
+            </div>
+            <div className='flex items-center space-x-1'>
+              <Calendar className='h-4 w-4' />
+              <span>{project.year}</span>
+            </div>
+          </div>
+
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center space-x-4 text-sm text-gray-600'>
+              <div className='flex items-center space-x-1'>
+                <Building className='h-4 w-4' />
+                <span>{project.floors} floors</span>
+              </div>
+              <div className='flex items-center space-x-1'>
+                <Users className='h-4 w-4' />
+                <span>{project.units} units</span>
+              </div>
+            </div>
+            <button
+              onClick={() => onSelect(project)}
+              className='text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1'
+            >
+              <span>View Details</span>
+              <ExternalLink className='h-4 w-4' />
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+);
+
+ProjectCard.displayName = 'ProjectCard';
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [filter, setFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Advanced filters state
+  const [filters, setFilters] = useState({
+    rooms: null as number | null,
+    area: [0, 200] as [number, number],
+    floor: null as number | null,
+    year: null as string | null,
+  });
 
   const projects = [
     {
@@ -54,7 +166,10 @@ const Projects = () => {
         'Underground parking',
       ],
       details:
-        'Azure Heights represents the pinnacle of urban living with its sleek glass facade and modern amenities. The building features energy-efficient systems, smart home technology, and breathtaking views of the city skyline.',
+        'Azure Heights represents the pinnacle of urban living with its sleek glass facade and modern amenities.',
+      rooms: 3,
+      area: 120,
+      completionYear: '2024',
     },
     {
       id: 2,
@@ -77,6 +192,9 @@ const Projects = () => {
       ],
       details:
         'The Riverside Towers project showcases our expertise in complex multi-building developments. Each tower is designed to maximize water views while providing residents with resort-style amenities.',
+      rooms: 2,
+      area: 100,
+      completionYear: '2025',
     },
     {
       id: 3,
@@ -94,6 +212,9 @@ const Projects = () => {
       features: ['Playground', 'Community garden', 'Pet park', 'Bike storage'],
       details:
         'Garden Court Residences demonstrates our commitment to family-friendly living. The building integrates seamlessly with the surrounding landscape while providing modern conveniences.',
+      rooms: 1,
+      area: 50,
+      completionYear: '2024',
     },
     {
       id: 4,
@@ -116,6 +237,9 @@ const Projects = () => {
       ],
       details:
         'Our tallest residential project to date, Metropolitan Plaza sets new standards for luxury high-rise living with its sophisticated design and premium amenities.',
+      rooms: 4,
+      area: 160,
+      completionYear: '2026',
     },
     {
       id: 5,
@@ -138,6 +262,9 @@ const Projects = () => {
       ],
       details:
         'Parkside Commons showcases our commitment to sustainable construction with LEED Gold certification and innovative green building technologies.',
+      rooms: 2,
+      area: 80,
+      completionYear: '2023',
     },
     {
       id: 6,
@@ -160,19 +287,55 @@ const Projects = () => {
       ],
       details:
         'Skyline Residences offers the perfect balance of urban convenience and residential comfort with stunning views and thoughtfully designed amenities.',
+      rooms: 3,
+      area: 100,
+      completionYear: '2024',
     },
   ];
 
-  const filters = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'high-rise', label: 'High-Rise (15+ floors)' },
-    { id: 'mid-rise', label: 'Mid-Rise (6-14 floors)' },
+  const categoryOptions = [
+    { id: 'all', label: 'Barcha Loyihalar' },
+    { id: 'high-rise', label: "Ko'p Qavatli (15+ qavat)" },
+    { id: 'mid-rise', label: "O'rta Qavatli (6-14 qavat)" },
   ];
 
-  const filteredProjects =
-    filter === 'all'
-      ? projects
-      : projects.filter((project) => project.category === filter);
+  const filteredProjects = projects.filter((project) => {
+    // Category filter
+    if (categoryFilter !== 'all' && project.category !== categoryFilter)
+      return false;
+
+    // Room filter
+    if (filters.rooms !== null && project.rooms !== filters.rooms) return false;
+
+    // Area filter
+    if (project.area < filters.area[0] || project.area > filters.area[1])
+      return false;
+
+    // Floor filter
+    if (filters.floor !== null && project.floors < filters.floor) return false;
+
+    // Year filter
+    if (filters.year !== null && project.completionYear !== filters.year)
+      return false;
+
+    return true;
+  });
+
+  const handleProjectSelect = useCallback((project: Project) => {
+    setSelectedProject(project);
+  }, []);
+
+  const handleFilterChange = useCallback(
+    (newFilters: {
+      rooms: number | null;
+      area: [number, number];
+      floor: number | null;
+      year: string | null;
+    }) => {
+      setFilters(newFilters);
+    },
+    []
+  );
 
   return (
     <section id='projects' className='py-20 bg-white relative overflow-hidden'>
@@ -187,227 +350,166 @@ const Projects = () => {
           className='text-center mb-16'
         >
           <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
-            Our Project Portfolio
+            Loyihalarimiz
           </h2>
           <p className='text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed'>
-            Explore our collection of completed multi-storey residential
-            buildings, each designed and constructed to the highest standards of
-            quality and innovation.
+            Bizning yakunlangan ko'p qavatli turar-joy binolarimiz to'plamini
+            kashf eting. Har bir bino sifat va innovatsiya bo'yicha eng yuqori
+            standartlarga muvofiq qurilgan.
           </p>
         </motion.div>
 
-        {/* Filter Buttons */}
+        {/* Advanced Filters */}
+        <FilterSection onFilterChange={handleFilterChange} />
+
+        {/* Category Filter Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className='flex flex-wrap justify-center gap-4 mb-12'
         >
-          {filters.map((filterOption) => (
+          {categoryOptions.map((option) => (
             <button
-              key={filterOption.id}
-              onClick={() => setFilter(filterOption.id)}
+              key={option.id}
+              onClick={() => setCategoryFilter(option.id)}
               className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                filter === filterOption.id
+                categoryFilter === option.id
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              {filterOption.label}
+              {option.label}
             </button>
           ))}
         </motion.div>
 
         {/* Projects Grid */}
         <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {filteredProjects.map((project, index) => (
-            <motion.div
+          {filteredProjects.map((project) => (
+            <ProjectCard
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className='bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300'
-            >
-              <div className='relative overflow-hidden'>
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className='w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500'
-                />
-                <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-
-                <div className='absolute top-4 left-4'>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium text-white ${
-                      project.category === 'high-rise'
-                        ? 'bg-blue-600'
-                        : 'bg-green-600'
-                    }`}
-                  >
-                    {project.floors} Floors
-                  </span>
-                </div>
-
-                <div className='absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className='bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-colors'
-                  >
-                    <Eye className='h-5 w-5 text-gray-900' />
-                  </button>
-                </div>
-
-                <div className='absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                  <div className='text-white'>
-                    <div className='text-sm font-medium'>
-                      {project.units} Units
-                    </div>
-                    <div className='text-xs opacity-90'>
-                      {project.timeline} Construction
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className='p-6'>
-                <h3 className='text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors'>
-                  {project.title}
-                </h3>
-                <p className='text-gray-600 mb-4 leading-relaxed'>
-                  {project.description}
-                </p>
-
-                <div className='flex items-center justify-between text-sm text-gray-500 mb-4'>
-                  <div className='flex items-center space-x-1'>
-                    <MapPin className='h-4 w-4' />
-                    <span>{project.location}</span>
-                  </div>
-                  <div className='flex items-center space-x-1'>
-                    <Calendar className='h-4 w-4' />
-                    <span>{project.year}</span>
-                  </div>
-                </div>
-
-                <div className='flex items-center justify-between'>
-                  <div className='flex items-center space-x-4 text-sm text-gray-600'>
-                    <div className='flex items-center space-x-1'>
-                      <Building className='h-4 w-4' />
-                      <span>{project.floors} floors</span>
-                    </div>
-                    <div className='flex items-center space-x-1'>
-                      <Users className='h-4 w-4' />
-                      <span>{project.units} units</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className='text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1'
-                  >
-                    <span>View Details</span>
-                    <ExternalLink className='h-4 w-4' />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
+              project={project}
+              onSelect={handleProjectSelect}
+            />
           ))}
         </div>
 
         {/* Project Detail Modal */}
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className='fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4'
-            onClick={() => setSelectedProject(null)}
-          >
+        <AnimatePresence>
+          {selectedProject && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className='bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto'
-              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className='fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4'
+              onClick={() => setSelectedProject(null)}
             >
-              <div className='relative'>
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className='w-full h-64 md:h-80 object-cover'
-                />
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className='absolute top-4 right-4 bg-white/90 p-2 rounded-full hover:bg-white transition-colors'
-                >
-                  <ExternalLink className='h-5 w-5 text-gray-900' />
-                </button>
-              </div>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className='bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto'
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className='relative aspect-video'>
+                  <LazyImage
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className='w-full h-full'
+                  />
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className='absolute top-4 right-4 bg-white/90 p-2 rounded-full hover:bg-white transition-colors'
+                  >
+                    <ExternalLink className='h-5 w-5 text-gray-900' />
+                  </button>
+                </div>
 
-              <div className='p-8'>
-                <h3 className='text-3xl font-bold text-gray-900 mb-4'>
-                  {selectedProject.title}
-                </h3>
-                <p className='text-lg text-gray-600 mb-6'>
-                  {selectedProject.details}
-                </p>
+                <div className='p-8'>
+                  <h3 className='text-3xl font-bold text-gray-900 mb-4'>
+                    {selectedProject.title}
+                  </h3>
+                  <p className='text-lg text-gray-600 mb-6'>
+                    {selectedProject.details}
+                  </p>
 
-                <div className='grid md:grid-cols-2 gap-8 mb-6'>
-                  <div>
-                    <h4 className='text-xl font-bold text-gray-900 mb-4'>
-                      Project Details
-                    </h4>
-                    <div className='space-y-3'>
-                      <div className='flex justify-between'>
-                        <span className='text-gray-600'>Location:</span>
-                        <span className='font-medium'>
-                          {selectedProject.location}
-                        </span>
-                      </div>
-                      <div className='flex justify-between'>
-                        <span className='text-gray-600'>Completed:</span>
-                        <span className='font-medium'>
-                          {selectedProject.year}
-                        </span>
-                      </div>
-                      <div className='flex justify-between'>
-                        <span className='text-gray-600'>Floors:</span>
-                        <span className='font-medium'>
-                          {selectedProject.floors}
-                        </span>
-                      </div>
-                      <div className='flex justify-between'>
-                        <span className='text-gray-600'>Units:</span>
-                        <span className='font-medium'>
-                          {selectedProject.units}
-                        </span>
-                      </div>
-                      <div className='flex justify-between'>
-                        <span className='text-gray-600'>Timeline:</span>
-                        <span className='font-medium'>
-                          {selectedProject.timeline}
-                        </span>
+                  <div className='grid md:grid-cols-2 gap-8 mb-6'>
+                    <div>
+                      <h4 className='text-xl font-bold text-gray-900 mb-4'>
+                        Loyiha Tafsilotlari
+                      </h4>
+                      <div className='space-y-3'>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Manzil:</span>
+                          <span className='font-medium'>
+                            {selectedProject.location}
+                          </span>
+                        </div>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Yakunlangan:</span>
+                          <span className='font-medium'>
+                            {selectedProject.year}
+                          </span>
+                        </div>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Qavatlar:</span>
+                          <span className='font-medium'>
+                            {selectedProject.floors}
+                          </span>
+                        </div>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Xonadonlar:</span>
+                          <span className='font-medium'>
+                            {selectedProject.units}
+                          </span>
+                        </div>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Xonalar:</span>
+                          <span className='font-medium'>
+                            {selectedProject.rooms}
+                          </span>
+                        </div>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Maydoni:</span>
+                          <span className='font-medium'>
+                            {selectedProject.area} m²
+                          </span>
+                        </div>
+                        <div className='flex justify-between'>
+                          <span className='text-gray-600'>Yakunlanish:</span>
+                          <span className='font-medium'>
+                            {selectedProject.completionYear}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div>
-                    <h4 className='text-xl font-bold text-gray-900 mb-4'>
-                      Key Features
-                    </h4>
-                    <ul className='space-y-2'>
-                      {selectedProject.features.map((feature, index) => (
-                        <li key={index} className='flex items-center space-x-2'>
-                          <div className='w-2 h-2 bg-blue-600 rounded-full'></div>
-                          <span className='text-gray-600'>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div>
+                      <h4 className='text-xl font-bold text-gray-900 mb-4'>
+                        Asosiy Xususiyatlar
+                      </h4>
+                      <ul className='space-y-2'>
+                        {selectedProject.features.map((feature, index) => (
+                          <li
+                            key={index}
+                            className='flex items-center space-x-2'
+                          >
+                            <div className='w-2 h-2 bg-blue-600 rounded-full'></div>
+                            <span className='text-gray-600'>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
 };
 
-export default Projects;
+export default memo(Projects);
